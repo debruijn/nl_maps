@@ -1,5 +1,6 @@
 import os
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+
 import yaml
 
 
@@ -60,6 +61,29 @@ def run(config):
 
     if config['nl_config']['add_inset_border']:
         im = set_inset(im, config['nl_config']['inset_loc'], inset_color = tuple(config['nl_config']['inset_color']))
+
+    if config['nl_config']['legend']:
+        # Recover color + labels for both NL and BES part (-> labels need to be added to config)
+        # Sort by most common, and then alphabetically
+        # (Potentially limit to, e.g., 10 most common
+        # Plot a square with color-box and text in it and append to figure -> say if 4 fit, create multiple lines
+
+        # Test code below to understand workings
+        fontSize = 20
+        annotation = "test"
+        padding = 20
+        font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", fontSize, encoding="unic")  # TODO make this OS agnostic
+        temp = font.getbbox(annotation)
+        tw, th = temp[2] - temp[0], temp[3] - temp[1]
+        extended = ImageOps.expand(im, border=(0, 0, 0, th + 2 * padding), fill=(0, 0, 0))
+        w, h = extended.size
+        draw = ImageDraw.Draw(extended)
+        draw.text(((w - tw) // 2, h - th - padding), annotation, (255, 255, 255), font=font)
+        extended.save('out/result.png')
+
+
+        pass
+
 
     im.save(os.path.join(config['nl_config']['folder_out'], config['nl_config']['filename_out']))
 

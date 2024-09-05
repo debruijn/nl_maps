@@ -60,8 +60,8 @@ target_config_default:  &target_config_default
   legend: False # TODO: add legend func
 
 # Configs that are used
-use_config: ['example_insert_config', 'vote_europe_biggest_party', 'vote_provincie_kiescollege_biggest',
- 'vote_provincie_kiescollege_2nd_biggest']
+use_config: ['example_insert_config']  # , 'vote_europe_biggest_party', 'vote_provincie_kiescollege_biggest',
+ # 'vote_provincie_kiescollege_2nd_biggest']
 
 example_insert_config:
   bes_config:
@@ -74,6 +74,7 @@ example_insert_config:
     folder_out: 'out'
     do_crop: False
     add_inset_border: True
+    legend: True
     bes_colors:
       <<: *bes_colors_default
       BO: [ 0, 255, 0 ]
