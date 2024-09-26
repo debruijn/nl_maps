@@ -19,8 +19,8 @@ with manual tweaking for the merges of municipalities in 2017, 2018, 2019, 2021 
 The `nl_provinces.png` file follows the `LICENSE_ISLANDS_PROVINCES' license, which requires to also give attribution and
 indicate changes that have been made.
 
-- The source of this file can be found on [Wikipedia]
-(https://commons.wikimedia.org/wiki/File:Netherlands_provinces_map_blank.svg), and is own work from Gust Justice.
+- The source of this file can be found on [Wikipedia](https://commons.wikimedia.org/wiki/File:Netherlands_provinces_map_blank.svg), 
+and is own work from Gust Justice.
 - From this source-file, the BES islands have been split into their own file (see below) and from the remainder some
 small islands have been removed.
 - The resultant SVG has been exported as PNG into `nl_provinces.png`.
@@ -29,8 +29,8 @@ small islands have been removed.
 The `bes_islands.png` file follows the `LICENSE_ISLANDS_PROVINCES' license, which requires to also give attribution and
 indicate changes that have been made.
 
-- The source of this file can be found on [Wikipedia]
-(https://commons.wikimedia.org/wiki/File:Netherlands_provinces_map_blank.svg), and is own work from Gust Justice.
+- The source of this file can be found on [Wikipedia](https://commons.wikimedia.org/wiki/File:Netherlands_provinces_map_blank.svg), 
+and is own work from Gust Justice.
 - From this source-file, the European part has been split into its own file (see above). From the BES islands, the
 borders have been removed. Saba and Sint Eustatius have been increased in size to make them more visible. 
 - The resultant SVG has been exported as PNG into `bes_islands.png`.
