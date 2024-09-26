@@ -6,14 +6,14 @@ Create maps of the Netherlands that include the BES islands:
 Status: Work in Progress! This is not yet ready for production, but if you want to take it for a spin as is, feel free
 to try. Suggestions and questions are welcome!
 
-/ ## How to install and use
+## How to install and use
+To write
 
+## Motivation
+To write
 
-/ ## Motivation
-
-
-/ ## Frequently Asked Questions
-
+### Frequently Asked Questions
+To write
 
 ## Licensing and modifications
 The MIT License as included in `LICENSE` applies to all files in this repository outside the `source/` folder. For the
