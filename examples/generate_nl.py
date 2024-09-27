@@ -1,5 +1,4 @@
-# This script shows an example of how to use the package to generate a new map of the Netherlands based on plugged-in
-# data
+# This script shows an example of how to use nl_maps to generate a new map of the Netherlands based on plugged-in data
 
 import nl_maps
 
@@ -14,13 +13,13 @@ set_dict = {'friesland': 3,
             'other': 0,
             'bonaire': 2,
             'zeeland': 5,
-            'limburg': 3}  # Can use multiple spellings, incl Dutch & English, in future also Spanish, Papiamentu and Frisian, and abbreviations.
-# Can use "bes" to set all 3 islands at once
+            'limburg': 3}
 
 data.update(set_dict)  # By specifying with just numbers or strings, classes will be generated and colors will be assigned
 print(data.get_categories())
 print(data.mapping)
-# data.set_colors({k: '123123' for k in data.get_categories()})
+print(data.color_mapping)
+data.set_colors({0: [127, 127, 127, 255]})
 
 # Then, a map can be made, with default Config:
 nl_maps.generate_map(data)

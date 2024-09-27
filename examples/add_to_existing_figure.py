@@ -1,4 +1,4 @@
-# This script shows an example of how to use add_bes_to_nl to add the BES islands to an existing map of the Netherlands
+# This script shows an example of how to use nl_maps to add the BES islands to an existing map of the Netherlands
 
 import nl_maps
 
@@ -13,11 +13,3 @@ nl_maps.add_to_existing(source_pic, bes_data, save_to='out/not-tweaked.png')
 
 # But, these settings can be tweaked by specifying a Config object, in which the default settings can be overridden.
 config = nl_maps.Config()  # -> BES config, EU/source config, target config
-
-
-
-
-# Add_bes_to_nl
-# NL_at_its_BESt
-# nl_bes
-# nl_maps
