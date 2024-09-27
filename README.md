@@ -7,7 +7,28 @@ Status: Work in Progress! This is not yet ready for production, but if you want 
 to try. Suggestions and questions are welcome!
 
 ## How to install and use
-To write
+To install, you can use pip:
+`pip install nl_maps`
+
+A basic example of how to use this to update an existing figure:
+```python
+import nl_maps
+input_picture = 'input.png'
+bes_colors = {'bonaire': [255, 255, 0],
+              'saba':    [255, 255, 0],
+              'statia':  [0, 255, 0]}
+nl_maps.add_to_existing(input_picture, bes_colors, save_to='output.png')
+```
+A basic example of how to use this to generate a figure from scratch:
+```python
+import nl_maps
+nl_data = nl_maps.NLData(kind='provinces')  # Initialize with all provinces and BES islands set to 'N/A' and gray color
+nl_data.update({'bonaire': 'Lived there', 'zuid-holland': 'Lived there', 'utrecht': 'Semi-lived there'})  
+nl_maps.generate_map(nl_data, save_to='output.png')
+```
+
+### Extra configuration
+
 
 ## Motivation
 To write
