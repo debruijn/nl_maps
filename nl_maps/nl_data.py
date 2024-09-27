@@ -1,10 +1,4 @@
-# How to manage data:
-# dict[loc -> val, color]
-# So when called without colors, colors are assigned (keep track of a unique_val -> color mapping)
-# Then colors can be overridden per unique val.
 from collections import defaultdict
-
-# Colors can be assigned from the below list, or on a gradient.
 
 
 DEFAULT_COLORS = [[255, 0, 0, 255],
