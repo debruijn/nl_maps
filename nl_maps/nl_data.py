@@ -49,7 +49,10 @@ class NLData:
         self.color_mapping = defaultdict(lambda: DEFAULT_COLORS[len(self.color_mapping)])
         self.color_mapping['N/A'] = [127, 127, 127, 255]
         self.mapping = {}
-        self._init_provinces() if self.kind == 'provinces' else self._init_municipalities()
+        if self.kind == 'provinces':
+            self._init_provinces()
+        if self.kind == 'municipalities':
+            self._init_municipalities()
         if self.include_bes:
             self._init_bes()
 
@@ -71,10 +74,12 @@ class NLData:
     def _auto_update_colors(self, apply_mapping=None):
         if apply_mapping:
             for k, v in apply_mapping.items():
-                self.mapping[k] = [v, self.color_mapping[v]]
-        else:
+                # self.mapping[k] = [v, self.color_mapping[v]]
+                self.mapping[k] = v
+        else:  # TODO: consider to remove below since it is now doing nothing and a remainder from an older setup
             for k, v in self.mapping.items():
-                self.mapping[k] = [v[0], self.color_mapping[v[0]]]
+                pass  # self.mapping[k] = [v, self.color_mapping[v]]
+
 
     def _get_full_mapping(self, mapping):
         if 'bes' in mapping.keys():
