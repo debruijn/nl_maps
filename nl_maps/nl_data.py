@@ -93,7 +93,11 @@ class NLData:
         self.mapping.update(update_dict)
 
     def get_categories(self):
-        return self.color_mapping.values()
+        categories = dict(self.color_mapping)
+        for category in self.mapping.values():
+            if category not in categories:
+                categories[category] = self.color_mapping[category]
+        return categories
 
     def set_colors(self, color_dict):
         self.color_mapping.update(color_dict)
