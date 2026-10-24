@@ -7,6 +7,7 @@ authors = [
 dependencies = [
     "Pillow"
 ]
+optional-dependencies = { test = ["pytest>=8"] }
 description = "Create informative maps of the Netherlands, including the BES islands."
 readme = "README.md"
 license = {text = "MIT License"}
