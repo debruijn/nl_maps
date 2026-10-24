@@ -36,6 +36,26 @@ def test_bes_can_be_excluded():
     assert data.mapping["friesland"] == "N/A"
 
 
+def test_municipality_map_kind_fails_explicitly():
+    with pytest.raises(
+        NotImplementedError,
+        match="Municipality-level map generation is not implemented",
+    ):
+        NLData(kind="municipalities")
+
+
+def test_none_kind_preserves_bes_only_data_for_existing_map_workflow():
+    data = NLData(kind="none")
+
+    assert set(data.mapping) == BES_ISLANDS
+    assert set(data.mapping.values()) == {"N/A"}
+
+
+def test_unknown_map_kind_fails_with_value_error():
+    with pytest.raises(ValueError, match="kind must be 'provinces' or 'none'"):
+        NLData(kind="counties")
+
+
 def test_update_normalizes_region_aliases_and_case():
     data = NLData(kind="provinces")
 

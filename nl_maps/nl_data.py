@@ -38,6 +38,11 @@ rename = {'bon': 'bonaire', 'bo': 'bonaire', 'sab': 'saba', 'sta': 'statia', 'st
 class NLData:
 
     def __init__(self, kind='provinces', include_bes=True):
+        if kind == 'municipalities':
+            raise NotImplementedError("Municipality-level map generation is not implemented.")
+        if kind not in ('provinces', 'none'):
+            raise ValueError("kind must be 'provinces' or 'none'.")
+
         self.kind = kind
         self.include_bes = include_bes
         self.color_mapping = defaultdict(lambda: DEFAULT_COLORS[len(self.color_mapping)])
@@ -45,8 +50,6 @@ class NLData:
         self.mapping = {}
         if self.kind == 'provinces':
             self._init_provinces()
-        if self.kind == 'municipalities':
-            self._init_municipalities()
         if self.include_bes:
             self._init_bes()
 
@@ -57,9 +60,6 @@ class NLData:
                                                'friesland', 'groningen']}
         self._auto_update_colors(province_mapping)
         return {}
-
-    def _init_municipalities(self):
-        return {}  # TODO - will be quite some manual work so first make sure the concept works using the provinces
 
     def _init_bes(self):
         bes_mapping = {k: 'N/A' for k in ['bonaire', 'saba', 'statia']}
