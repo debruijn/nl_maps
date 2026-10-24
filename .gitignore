@@ -1,4 +1,4 @@
-local/*
+local/
 out/*
 Pipfile.lock
 .idea
