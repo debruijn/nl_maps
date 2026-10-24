@@ -76,16 +76,29 @@ class NLData:
 
 
     def _get_full_mapping(self, mapping):
-        if 'bes' in mapping.keys():
+        mapping = dict(mapping)
+        if 'bes' in mapping:
             mapping['bonaire'] = mapping['bes']
             mapping['saba'] = mapping['bes']
             mapping['statia'] = mapping['bes']
             del mapping['bes']
-        mapping = {rename[k.lower()] if k.lower() not in self.mapping else k.lower(): v for k, v in mapping.items()}
-        if 'other' not in mapping.keys():
-            return mapping
-        return {k: mapping[k] if k in mapping.keys() else mapping['other']
-                for k in self.mapping.keys()}
+        normalized_mapping = {}
+        for region, value in mapping.items():
+            if not isinstance(region, str):
+                raise ValueError(f"Region names must be strings, got {region!r}.")
+            name = region.lower()
+            normalized_name = name if name in self.mapping or name == 'other' else rename.get(name)
+            if normalized_name not in self.mapping and normalized_name != 'other':
+                supported_regions = ', '.join(sorted(self.mapping))
+                raise ValueError(
+                    f"Unknown or unsupported region {region!r}. "
+                    f"Supported regions: {supported_regions}."
+                )
+            normalized_mapping[normalized_name] = value
+        if 'other' not in normalized_mapping:
+            return normalized_mapping
+        return {region: normalized_mapping.get(region, normalized_mapping['other'])
+                for region in self.mapping}
 
     def update(self, update_dict):
         update_dict = self._get_full_mapping(update_dict)

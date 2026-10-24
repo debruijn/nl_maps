@@ -1,3 +1,5 @@
+import pytest
+
 from nl_maps import NLData
 
 
@@ -76,3 +78,14 @@ def test_get_categories_returns_category_to_color_mapping():
     assert categories["N/A"] == NOT_APPLICABLE_COLOR
     assert categories["holiday"] == custom_color
     assert len(categories["work"]) == 4
+
+
+@pytest.mark.parametrize("region", ["Atlantis", "Adam"])
+def test_update_rejects_unknown_or_unsupported_regions(region):
+    data = NLData(kind="provinces")
+    original_mapping = data.mapping.copy()
+
+    with pytest.raises(ValueError, match=f"Unknown or unsupported region '{region}'"):
+        data.update({region: "Party"})
+
+    assert data.mapping == original_mapping
