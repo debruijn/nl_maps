@@ -5,7 +5,7 @@ authors = [
   { name="Bert de Bruijn", email="lpdebruijn@gmail.com" },
 ]
 dependencies = [
-    "Pillow"
+    "Pillow>=12.1.0"
 ]
 optional-dependencies = { test = ["pytest>=8"] }
 description = "Create informative maps of the Netherlands, including the BES islands."

@@ -6,7 +6,7 @@ from importlib.resources import files
 
 def replace(image, color_from, color_to):
     newIm = []
-    for item in image.getdata():
+    for item in image.get_flattened_data():
         if all(color_from['lb'][i] <= x < color_from['ub'][i] for i, x in enumerate(item[:3])):
             newIm.append(tuple(color_to))
         else:
