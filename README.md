@@ -43,6 +43,9 @@ nl_maps.generate_map(nl_data, save_to='output.png')
 
 More configuration options and full documentation are planned for the future.
 
+### Repository scripts
+The earlier root-level prototype script and configuration have been removed. Use the `nl_maps` package API shown above.
+
 ## Motivation
 This package exists because of me coming across a lot of maps for the Netherlands that don't contain the BES islands, 
 but being in a situation where they either should contain them or that it would be nice if they would. I started to look
