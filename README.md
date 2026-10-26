@@ -1,7 +1,10 @@
 # Full Netherlands maps - Work In Progress
 Create maps of the Netherlands that include the BES islands:
 - append the islands to an existing map
-- generate a new map (based on provinces or municipalities) that can also include the BES islands.
+- generate a new province-level map that can also include the BES islands.
+
+Municipality-level map generation is not implemented yet. The existing-map workflow can still append the BES islands
+to an existing image, including one that already shows municipalities.
 
 Status: Work in Progress! This is not yet ready for production, but if you want to take it for a spin as is, feel free
 to try. Suggestions and questions are welcome!
@@ -27,20 +30,18 @@ nl_data.update({'bonaire': 'Lived there', 'zuid-holland': 'Lived there', 'utrech
 nl_maps.generate_map(nl_data, save_to='output.png')
 ```
 
-### Extra configuration
-The functionality of this package can be / will be changed in several ways:
-- supplying a nl_maps.Config object to add_to_existing/generate_map, which can:
-  - change background color of output
-  - change how to crop/zoom an existing figure before appending BES islands
-  - change where the BES islands will be put, and whether there will be an inset or not
-  - change output size
-- initializing nl_data with inputs:
-  - input `kind` can be 'provinces' or 'municipalities' to generate with either, or 'None' to skip them
-  - input 'include_bes' is True by default and will initialize the BES islands but can be set to False
-- updating default colors in nl_data by calling nl_data.set_colors()
-  - one can call nl_data.get_categories() to see the current mapping of categories to colors
+### Current API scope and configuration
+- `NLData(kind='provinces')` supports province-level maps. `kind='municipalities'` is not implemented and raises
+  `NotImplementedError`; municipality-level generation is a future goal.
+- `include_bes` is `True` by default and initializes the BES islands; set it to `False` to omit them.
+- `kind='none'` is an internal BES-only mode used by `add_to_existing`; it is not a mode for generating a Netherlands
+  base map.
+- `NLData.set_colors()` changes category colors, and `NLData.get_categories()` returns the current category-to-color
+  mapping.
+- A `nl_maps.Config` object can customize current source, output, and BES placement settings. Cropping or zooming an
+  existing image, inset borders, and custom output sizing are not implemented yet.
 
-More options and a full documentation with examples of these are planned for the future.
+More configuration options and full documentation are planned for the future.
 
 ## Motivation
 This package exists because of me coming across a lot of maps for the Netherlands that don't contain the BES islands, 

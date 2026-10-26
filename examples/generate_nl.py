@@ -2,7 +2,7 @@
 
 import nl_maps
 
-# Generate an empty NLData object. By default, this will be of the municipality type - but it can be provincial as here.
+# Generate province-level NLData. Municipality-level map generation is not implemented yet.
 data = nl_maps.NLData(kind='provinces')  # -> with/without BES as well (in future CAS?)
 
 # Initially, all regions are set to have a gray color and N/A label. These can be set manually using a dictionary
