@@ -1,0 +1,81 @@
+name: Tests and package build
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+        pillow-version: ["12.1.0", "latest"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install test dependencies with latest Pillow
+        if: matrix.pillow-version == 'latest'
+        run: python -m pip install -e ".[test]"
+      - name: Install test dependencies with minimum Pillow
+        if: matrix.pillow-version != 'latest'
+        run: python -m pip install -e ".[test]" "Pillow==${{ matrix.pillow-version }}"
+      - name: Run tests
+        run: python -m pytest -q -W error::DeprecationWarning
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install build frontend
+        run: python -m pip install build
+      - name: Build wheel and source distribution
+        run: python -m build --wheel --sdist
+      - name: Verify maps and license files are packaged
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          import zipfile
+
+          required = {
+              "nl_maps/source/bes_islands.png",
+              "nl_maps/source/nl_municipalities.png",
+              "nl_maps/source/nl_provinces.png",
+              "nl_maps/source/LICENSE_ISLANDS_PROVINCES",
+              "nl_maps/source/LICENSE_MUNICIPALITIES",
+              "nl_maps/source/MODIFICATIONS.md",
+          }
+          wheel_path = next(Path("dist").glob("*.whl"))
+          sdist_path = next(Path("dist").glob("*.tar.gz"))
+
+          with zipfile.ZipFile(wheel_path) as wheel:
+              wheel_files = set(wheel.namelist())
+          with tarfile.open(sdist_path, "r:gz") as sdist:
+              sdist_files = {
+                  name.split("/", 1)[1] for name in sdist.getnames() if "/" in name
+              }
+
+          for artifact, files in (("wheel", wheel_files), ("sdist", sdist_files)):
+              missing = required - files
+              if missing:
+                  raise SystemExit(f"{artifact} is missing: {', '.join(sorted(missing))}")
+
+          if not any(name.endswith(".dist-info/licenses/LICENSE") for name in wheel_files):
+              raise SystemExit("wheel is missing the project LICENSE")
+          if "LICENSE" not in sdist_files:
+              raise SystemExit("sdist is missing the project LICENSE")
+          PY
