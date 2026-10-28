@@ -10,7 +10,13 @@ dependencies = [
 optional-dependencies = { test = ["pytest>=8"] }
 description = "Create informative maps of the Netherlands, including the BES islands."
 readme = "README.md"
-license = {text = "MIT License"}
+license = "MIT AND CC-BY-SA-4.0 AND LicenseRef-CBS"
+license-files = [
+    "LICENSE",
+    "nl_maps/source/LICENSE_ISLANDS_PROVINCES",
+    "nl_maps/source/LICENSE_MUNICIPALITIES",
+    "nl_maps/source/MODIFICATIONS.md",
+]
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
