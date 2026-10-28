@@ -13,6 +13,8 @@ to try. Suggestions and questions are welcome!
 To install, you can use pip:
 `pip install nl_maps`
 
+The package requires Python 3.10 or later and Pillow 12.1.0 or later.
+
 A basic example of how to use this to update an existing figure:
 ```python
 import nl_maps
@@ -38,8 +40,9 @@ nl_maps.generate_map(nl_data, save_to='output.png')
   base map.
 - `NLData.set_colors()` changes category colors, and `NLData.get_categories()` returns the current category-to-color
   mapping.
-- A `nl_maps.Config` object can customize current source, output, and BES placement settings. Cropping or zooming an
-  existing image, inset borders, and custom output sizing are not implemented yet.
+- A `nl_maps.Config` object can customize BES placement, background color, and output path settings. `generate_map()`
+  uses the package's bundled map assets; `add_to_existing()` accepts a caller-provided image path. Cropping or zooming
+  an existing image, inset borders, and custom output sizing are not implemented yet.
 
 More configuration options and full documentation are planned for the future.
 
@@ -74,9 +77,11 @@ included ("Oh, on the islands they had elections as well") but for the message t
 probably not relevant ("Across the country, people voted mostly for Party X, with exceptions for Y and Z in regions 
 A and B").
 - Showing generally available statistics across the country, such as average household size, average household income,
-etcetera. The European level data come from CBS (Statistics Netherlands), who also provide data for the Caribbean
-Netherlands for most common statistics. In order to show a complete picture of the Netherlands, these maps **should**
-include the islands as well as long as the data is easily available.
+etcetera. Statistics Netherlands (CBS) publishes [StatLine data through open-data interfaces](https://www.cbs.nl/en-gb/our-services/open-data).
+Whether a particular statistic covers both European and Caribbean Netherlands, and whether definitions are comparable,
+depends on the table. Before combining values in one map, check the table's geography, definitions, time period, and
+units. When suitable comparable data are available, maps intended to show the whole country **should** include the
+islands.
 - A map of the different water suppliers / water companies in the Netherlands. People use such a graph in case they
 are interested in the company supplying water to a specific area, for example when they are planning to move there. Of 
 course, the islands have their own water infrastructure, so people will not look at the islands for the same reason, but
@@ -129,6 +134,5 @@ dollars to euros)
 - Integrate this with data pulled from CBS on municipality or province level (and automatically map to BES data tables)
 
 ## Licensing and modifications
-The MIT License as included in `LICENSE` applies to all files in this repository outside the `source/` folder. For the
-PNG files in that folder, separate licenses apply, as explained in `source/MODIFICATIONS.md` together with the changes
-that have been applied to the original files.
+The MIT License in `LICENSE` applies to the package code. The map assets in `nl_maps/source/` have separate licenses;
+see the license files and `nl_maps/source/MODIFICATIONS.md` for attribution and a description of changes.

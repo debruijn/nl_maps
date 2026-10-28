@@ -25,7 +25,7 @@ data.set_colors({0: [127, 127, 127, 255]})
 nl_maps.generate_map(data)
 
 # Or, the config can be changed
-config = nl_maps.Config() # -> BES config, EU config, target config
+config = nl_maps.Config() # -> BES, EU/NL, and output config
 config.out_config.bes_locs = {
     'bonaire': [100, 50],
     'saba': [120, 200],

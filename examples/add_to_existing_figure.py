@@ -1,15 +1,29 @@
 # This script shows an example of how to use nl_maps to add the BES islands to an existing map of the Netherlands
 
-import nl_maps
+from importlib.resources import as_file, files
 
-source_pic = '../nl_maps/source/nl_provinces.png'
+import nl_maps
 
 bes_data = {'bonaire': [255, 255, 0],
             'saba': [ 255, 255, 0],
             'statia': [0, 255, 0]}
 
-# By default, BES will be put in top-left using a transparent layer and certain generally usable settings.
-nl_maps.add_to_existing(source_pic, bes_data, save_to='out/not-tweaked.png')
+# Use the bundled province map as an example input. as_file also works if package resources are not regular files.
+source_pic = files("nl_maps").joinpath("source", "nl_provinces.png")
+with as_file(source_pic) as source_path:
+    # By default, BES will be placed in the top-left using the default layout.
+    nl_maps.add_to_existing(source_path, bes_data, save_to="out/not-tweaked.png")
 
-# But, these settings can be tweaked by specifying a Config object, in which the default settings can be overridden.
-config = nl_maps.Config()  # -> BES config, EU/source config, target config
+    # A Config object can override settings such as the BES island positions.
+    config = nl_maps.Config()
+    config.out_config.bes_locs = {
+        "bonaire": [100, 50],
+        "saba": [120, 200],
+        "statia": [220, 350],
+    }
+    nl_maps.add_to_existing(
+        source_path,
+        bes_data,
+        config=config,
+        save_to="out/custom-layout.png",
+    )
