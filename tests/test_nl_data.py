@@ -104,8 +104,22 @@ def test_get_categories_returns_category_to_color_mapping():
 def test_update_rejects_unknown_or_unsupported_regions(region):
     data = NLData(kind="provinces")
     original_mapping = data.mapping.copy()
+    original_colors = dict(data.color_mapping)
 
     with pytest.raises(ValueError, match=f"Unknown or unsupported region '{region}'"):
         data.update({region: "Party"})
 
     assert data.mapping == original_mapping
+    assert dict(data.color_mapping) == original_colors
+
+
+def test_update_with_invalid_region_does_not_partially_apply_valid_regions():
+    data = NLData(kind="provinces")
+    original_mapping = data.mapping.copy()
+    original_colors = dict(data.color_mapping)
+
+    with pytest.raises(ValueError, match="Unknown or unsupported region 'Atlantis'"):
+        data.update({"FR": "Holiday", "Atlantis": "Party"})
+
+    assert data.mapping == original_mapping
+    assert dict(data.color_mapping) == original_colors
